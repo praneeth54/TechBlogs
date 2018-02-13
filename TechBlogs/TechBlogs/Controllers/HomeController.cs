@@ -25,6 +25,14 @@ namespace TechBlogs.Controllers
         }
 
         [HttpGet]
+        public ActionResult Home()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View("Home");
+        }
+
+        [HttpGet]
         public ActionResult AddorEditUser()
         {
             return View();
