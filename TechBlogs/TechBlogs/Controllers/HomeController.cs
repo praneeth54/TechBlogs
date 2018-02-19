@@ -41,15 +41,24 @@ namespace TechBlogs.Controllers
         [HttpPost]
         public async Task<ActionResult> AddorEditUser(Users _users)
         {
-            var user = new ApplicationUser { UserName = _users.UserName, Email = _users.Email , PasswordHash= _users.Password};
-            var result = await _userManager.CreateAsync(user, _users.Password);
-            var id = user.Id;
-            if (result.Succeeded)
-            {
-                _logger.WriteInformation("User created a new account with password.");
-            }
+                var user = new ApplicationUser { UserName = _users.UserName, Email = _users.Email , PasswordHash= _users.Password};
 
-            return View();
+            try
+            {
+                var result = await _userManager.CreateAsync(user, _users.Password);
+                var id = user.Id;
+                if (result.Succeeded)
+                {
+                    _logger.WriteInformation("User created a new account with password.");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

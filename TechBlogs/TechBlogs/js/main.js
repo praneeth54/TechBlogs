@@ -1,3 +1,6 @@
+/// <reference path="owl.carousel.js" />
+
+
 "use strict";
 $(document).ready(function() {
 

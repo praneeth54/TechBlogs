@@ -22,7 +22,10 @@
     <link rel="stylesheet" href="~/css/color.css">
     <link rel="stylesheet" href="~/css/responsive.css">
     @*<link href="~/css/color.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
     <script src="~/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/owl.carousel.js"></script>
 </head>
 <body>
     <!--************************************
@@ -2501,17 +2504,27 @@
     <!--************************************
             Register End
     *************************************-->
+   
     <script src="~/js/vendor/jquery-library.js"></script>
     <script src="~/js/vendor/bootstrap.min.js"></script>
     <script src="~/js/jquery.cycle2.min.js"></script>
     <script src="~/js/jquery.cycle2.carousel.min.js"></script>
     <script src="~/js/simpleWeather.js"></script>
-    <script src="~/js/owl.carousel.js"></script>
+    
     <script src="~/js/isotope.pkgd.js"></script>
     <script src="~/js/flexslider.js"></script>
     <script src="~/js/parallax.js"></script>
     <script src="~/js/MetroJs.js"></script>
     <script src="~/js/swiper.js"></script>
-    <script src="~/js/main.js"></script>
+    
+
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        alert("hi");
+        $("#tg-thumbpost-slider").owlCarousel({
+        });
+    });
+</script>

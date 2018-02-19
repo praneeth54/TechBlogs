@@ -33,5 +33,48 @@ namespace DataAccessLayer
 
 
         }
+
+
+        public List<Users> GetAllUsers()
+        {
+            List<Users> users = tc.Users.ToList();
+            return users;
+        }
+
+        public List<Users> GetUsersByID(int ID)
+        {
+            List<Users> users = tc.Users.Where(x=>x.UserID==ID).ToList();
+            return users;
+        }
+
+        public List<Posts> GetAllPosts()
+        {
+            List<Posts> posts = tc.Posts.ToList();
+            return posts;
+        }
+
+        public List<Posts> GetPostsByID(int postId)
+        {
+            List<Posts> postsbyid = tc.Posts.Where(x => x.PostId == postId).ToList();
+            return postsbyid;
+        }
+
+        public void DeleteUser(int id)
+        {
+            Users usr = tc.Users.Where(x=>x.UserID==id).FirstOrDefault();
+            tc.Users.Remove(usr);
+            //return status and use SP
+        }
+
+        public void DeleteUsers(int[] ids)
+        {
+            //return status and use SP
+        }
+
+
+        // posts
+
+         
+
     }
 }

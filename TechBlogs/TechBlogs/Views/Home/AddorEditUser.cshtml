@@ -5,3 +5,36 @@
 
 <h2>AddorEditUser</h2>
 
+<div>
+    <input type="text" value="" placeholder="FirstName" id="firstname"/>
+    <input type="text" value="" placeholder="LastName" id="lastname"/>
+
+    <input type="button" id="adduser" value="Add" />
+</div>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+       // alert("hi");
+    });
+        
+    $("#adduser").click(function () {
+        var _users = {
+            'FirstName': $("#firstname").val(),
+            'LastName': $("#lastname").val()
+        }; 
+        alert(JSON.stringify(_users));
+        $.ajax({
+            url: '/Home/AddorEditUser/',
+            type: 'POST',
+            datatype: 'json',
+            data: _users,
+            success: function (data) {
+            }
+           
+        });
+    });
+
+</script>
