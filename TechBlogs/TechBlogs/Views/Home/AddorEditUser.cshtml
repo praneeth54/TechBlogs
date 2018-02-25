@@ -6,8 +6,14 @@
 <h2>AddorEditUser</h2>
 
 <div>
-    <input type="text" value="" placeholder="FirstName" id="firstname"/>
-    <input type="text" value="" placeholder="LastName" id="lastname"/>
+    <input type="text" value="" placeholder="FirstName" id="firstname" />
+    <input type="text" value="" placeholder="LastName" id="lastname" />
+    <input type="date" value="" placeholder="DOB" id="DOB" />
+    <input type="email" value="" placeholder="Email ID" id="emailid" />
+    <input type="text" value="" placeholder="Password" id="password" />
+    <input type="number" value="" placeholder="Mobile" id="mobile" />
+    @*<input type="text" value="" placeholder="LastName" id="lastname" />
+    <input type="text" value="" placeholder="LastName" id="lastname" />*@
 
     <input type="button" id="adduser" value="Add" />
 </div>
@@ -23,9 +29,14 @@
     $("#adduser").click(function () {
         var _users = {
             'FirstName': $("#firstname").val(),
-            'LastName': $("#lastname").val()
+            'LastName': $("#lastname").val(),
+            'Email': $("#emailid").val(),
+            'Password': $("#password").val(),
+            'DOB': $("#DOB").val()
+            
+
         }; 
-        alert(JSON.stringify(_users));
+       // alert(JSON.stringify(_users));
         $.ajax({
             url: '/Home/AddorEditUser/',
             type: 'POST',

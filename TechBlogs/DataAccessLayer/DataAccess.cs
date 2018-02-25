@@ -11,6 +11,8 @@ namespace DataAccessLayer
     public class DataAccess
     {
         TechContext tc = new TechContext();
+
+        // Users and Admins
         public void AddOrEditUser(Users _users)
         {
             if (_users.UserID == 0)
@@ -47,16 +49,36 @@ namespace DataAccessLayer
             return users;
         }
 
-        public List<Posts> GetAllPosts()
+       
+
+
+        //** All Posts
+        public List<Posts> GetAllPosts(int? id)
         {
-            List<Posts> posts = tc.Posts.ToList();
-            return posts;
+                int pageNumber = id ?? 0;
+            List<Posts> pst = (from post in tc.Posts
+                                      where post.DateTimePost < DateTime.Now
+                                      orderby post.DateTimePost descending
+                                      select post).ToList();
+                //ViewBag.IsPreviousLinkVisible = pageNumber > 0;
+                //ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
+                //ViewBag.PageNumber = pageNumber;
+                //ViewBag.IsAdmin = IsAdmin;
+               // return View(pst.Take(PostsperPage));
+            //List<Posts> posts = tc.Posts.ToList();
+            return pst;
         }
 
         public List<Posts> GetPostsByID(int postId)
         {
             List<Posts> postsbyid = tc.Posts.Where(x => x.PostId == postId).ToList();
             return postsbyid;
+        }
+
+
+        public void UpdatePosts(Posts pst)
+        {
+          
         }
 
         public void DeleteUser(int id)
