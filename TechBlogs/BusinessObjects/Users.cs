@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechBlogs.Models
+namespace BusinessObjects
 {
    public class Users
     {

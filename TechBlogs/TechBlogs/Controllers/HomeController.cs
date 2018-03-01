@@ -10,15 +10,21 @@ using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security;
+using System.Net;
+using static TechBlogs.ApplicationUserManager;
+using BusinessLayer;
+using BusinessObjects;
 
 namespace TechBlogs.Controllers
 {
     public class HomeController : Controller
     {
+        Business BL = new Business();
+         
         private readonly ILogger _logger;
         private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
 
-       
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
         public HomeController(ApplicationUserManager userManager,
            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
@@ -41,6 +47,18 @@ namespace TechBlogs.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -88,49 +106,79 @@ namespace TechBlogs.Controllers
             
         }
 
-       
 
-        public void Login(string UName, string Pwd, string returnUrl = null)
+        // POST: /Home/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var result2 = await _signInManager.PasswordSignInAsync(UName, Pwd, false, lockoutOnFailure: false);
-            if (result2.Succeeded)
+            if (!ModelState.IsValid)
             {
-                var streaker = objStreakBusiness.GetStreakerByEmailID(UName);
-                var claims = User.Claims;
-                //int id = int.Parse(claims.ElementAt(6).Value);
-
-
-                objStreakBusiness.StreakerLogin(streaker.StreakerID);
-                _logger.LogInformation(1, "User logged in.");
-                if (streaker.Role == 3)
-                {
-                    return RedirectToAction("AdminDashBoard");
-                }
-                else
-                    return RedirectToAction("CoachUsers");
+                return View(model);
             }
-            ViewBag.Message = "Username or Password is Incorrect.";
-            return View("Index");
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.EmailID, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         //Get All Blogs
+        //[HttpGet]
+        //public ActionResult GetAllBlogs(int? id)
+        //{
+        //    int pageNumber = id ?? 0;
+        //    IEnumerable<Posts> pst = (from post in BE.posts
+        //                             where post.datetimepost < DateTime.Now
+        //                             orderby post.datetimepost descending
+        //                             select post).Skip(pageNumber * PostsperPage).Take(PostsperPage + 1);
+        //    ViewBag.IsPreviousLinkVisible = pageNumber > 0;
+        //    ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
+        //    ViewBag.PageNumber = pageNumber;
+        //    ViewBag.IsAdmin = IsAdmin;
+        //    return View(pst.Take(PostsperPage));
+        //}
+
         [HttpGet]
-        public ActionResult GetAllBlogs(int? id)
+        public ActionResult test()
         {
-            int pageNumber = id ?? 0;
-            IEnumerable<Posts> pst = (from post in BE.posts
-                                     where post.datetimepost < DateTime.Now
-                                     orderby post.datetimepost descending
-                                     select post).Skip(pageNumber * PostsperPage).Take(PostsperPage + 1);
-            ViewBag.IsPreviousLinkVisible = pageNumber > 0;
-            ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
-            ViewBag.PageNumber = pageNumber;
-            ViewBag.IsAdmin = IsAdmin;
-            return View(pst.Take(PostsperPage));
+            return View();
         }
 
+        [HttpGet]
+        public ActionResult PostBlogs()
+        {
+            return View();
+        }
 
-
+        [HttpPost]
+        public ActionResult PostBlogs(Posts pst)
+        {
+            BL.AddBlogs(pst);
+            return View();
+        }
 
     }
 }

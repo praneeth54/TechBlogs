@@ -44,13 +44,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TechBlogs\TechBlogs.csproj">
-      <Project>{dd023f71-aa99-4390-9570-71b5940ad0c6}</Project>
-      <Name>TechBlogs</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
+      <Project>{6aface00-cf39-4ebe-ad32-b4e12a38a64a}</Project>
+      <Name>BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{0dbf3076-6f2b-4a66-aaa1-417905ad73c7}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

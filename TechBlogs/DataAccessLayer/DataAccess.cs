@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLayer;
-using TechBlogs.Models;
+using BusinessObjects;
 
 namespace DataAccessLayer
 {
@@ -49,10 +48,26 @@ namespace DataAccessLayer
             return users;
         }
 
-       
 
+        public void DeleteUser(int id)
+        {
+            Users usr = tc.Users.Where(x => x.UserID == id).FirstOrDefault();
+            tc.Users.Remove(usr);
+            //return status and use SP
+        }
+
+        public void DeleteUsers(int[] ids)
+        {
+            //return status and use SP
+        }
 
         //** All Posts
+
+        public void AddNewPost(Posts post)
+        {
+            tc.Posts.Add(post);
+        }
+
         public List<Posts> GetAllPosts(int? id)
         {
                 int pageNumber = id ?? 0;
@@ -69,6 +84,7 @@ namespace DataAccessLayer
             return pst;
         }
 
+
         public List<Posts> GetPostsByID(int postId)
         {
             List<Posts> postsbyid = tc.Posts.Where(x => x.PostId == postId).ToList();
@@ -81,17 +97,7 @@ namespace DataAccessLayer
           
         }
 
-        public void DeleteUser(int id)
-        {
-            Users usr = tc.Users.Where(x=>x.UserID==id).FirstOrDefault();
-            tc.Users.Remove(usr);
-            //return status and use SP
-        }
-
-        public void DeleteUsers(int[] ids)
-        {
-            //return status and use SP
-        }
+      
 
 
         // posts

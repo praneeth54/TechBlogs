@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PostBlogs</title>
+</head>
+<body>
+    <div>
+        <input type="text" placeholder="Title" id="title" />
+        <input type="text" placeholder="Description" id="description" />
+        <input type="text" placeholder="Tags" id="tags" />
+        <input type="button" id="postblog" value="PostBlogs" />
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        
+    });
+
+    $("#postblog").click(function () {
+        alert("hi");
+        var post= {
+            PostTitle: $("#title").val(),
+            DateTimePost: Date,
+            Description: $("#description").val(),
+
+        }
+    $.ajax({
+        url: '/Home/PostBlogs/',
+            type: 'POST',
+            datatype: 'JSON',
+            data: post,
+
+            success: function (data) {
+
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+
+        });
+    });
+   
+</script>
