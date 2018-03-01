@@ -14,5 +14,6 @@ namespace BusinessObjects
         public string Description { get; set; }
         public int LikesForPost { get; set; }
         public List<Comments> CommentsForPosts { get; set; }
+
     }
 }
