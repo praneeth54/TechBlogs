@@ -65,15 +65,17 @@ namespace DataAccessLayer
 
         public void AddNewPost(Posts post)
         {
+            post.PostDate = DateTime.Today;
             tc.Posts.Add(post);
+            tc.SaveChanges();
         }
 
         public List<Posts> GetAllPosts(int? id)
         {
                 int pageNumber = id ?? 0;
             List<Posts> pst = (from post in tc.Posts
-                                      where post.DateTimePost < DateTime.Now
-                                      orderby post.DateTimePost descending
+                                      where post.PostDate < DateTime.Now
+                                      orderby post.PostDate descending
                                       select post).ToList();
                 //ViewBag.IsPreviousLinkVisible = pageNumber > 0;
                 //ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;

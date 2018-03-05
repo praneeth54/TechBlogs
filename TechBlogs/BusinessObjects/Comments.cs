@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessObjects
 {
-   public class Comments
+    [Table("Comments")]
+    public class Comments
     {
+        [Key]
         public int CommentId { get; set; }
         public int PostId { get; set; }
         public DateTime CommentDate { get; set; }

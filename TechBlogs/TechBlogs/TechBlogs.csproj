@@ -461,6 +461,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\color.css" />
+    <Content Include="css\custom.css" />
     <Content Include="css\flexslider.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\fonts\flexslider-icon-2.html" />
@@ -712,6 +713,9 @@
     <Content Include="Views\Blogs\PostBlogs.cshtml" />
     <Content Include="Views\Blogs\GetAllBlogs.cshtml" />
     <Content Include="Views\Home\PostBlogs.cshtml" />
+    <Content Include="Views\Home\blog.cshtml" />
+    <Content Include="Views\Home\GetAllBlogs.cshtml" />
+    <Content Include="Views\Shared\PostHelper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

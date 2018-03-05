@@ -24,5 +24,11 @@ namespace BusinessLayer
             dc.AddNewPost(pst);
         }
 
+      public List<Posts>  GetAllPosts(int? postid)
+        {
+           List<Posts> pst= dc.GetAllPosts(postid);
+            return pst;
+        }
+
     }
 }

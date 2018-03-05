@@ -1,0 +1,37 @@
+﻿@using BusinessObjects;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetAllBlogs</title>
+</head>
+<body>
+    <div> 
+       
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: 'Home/GetAllBlogs',
+            type: 'GET',
+            datatype: 'json',
+
+            success: function (data) {
+
+            },
+            error: function () {
+
+            }
+
+        });
+    });
+</script>

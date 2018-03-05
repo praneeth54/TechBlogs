@@ -146,20 +146,22 @@ namespace TechBlogs.Controllers
         }
 
         //Get All Blogs
-        //[HttpGet]
-        //public ActionResult GetAllBlogs(int? id)
-        //{
-        //    int pageNumber = id ?? 0;
-        //    IEnumerable<Posts> pst = (from post in BE.posts
-        //                             where post.datetimepost < DateTime.Now
-        //                             orderby post.datetimepost descending
-        //                             select post).Skip(pageNumber * PostsperPage).Take(PostsperPage + 1);
-        //    ViewBag.IsPreviousLinkVisible = pageNumber > 0;
-        //    ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
-        //    ViewBag.PageNumber = pageNumber;
-        //    ViewBag.IsAdmin = IsAdmin;
-        //    return View(pst.Take(PostsperPage));
-        //}
+        [HttpGet]
+        public ActionResult GetAllBlogs(int? id)
+        {
+            var result=BL.GetAllPosts(id);
+            return Json(result);
+            //int pageNumber = id ?? 0;
+            //IEnumerable<Posts> pst = (from post in BE.posts
+            //                          where post.datetimepost < DateTime.Now
+            //                          orderby post.datetimepost descending
+            //                          select post).Skip(pageNumber * PostsperPage).Take(PostsperPage + 1);
+            //ViewBag.IsPreviousLinkVisible = pageNumber > 0;
+            //ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
+            //ViewBag.PageNumber = pageNumber;
+            //ViewBag.IsAdmin = IsAdmin;
+            //return View(pst.Take(PostsperPage));
+        }
 
         [HttpGet]
         public ActionResult test()
@@ -177,6 +179,12 @@ namespace TechBlogs.Controllers
         public ActionResult PostBlogs(Posts pst)
         {
             BL.AddBlogs(pst);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult blog()
+        {
             return View();
         }
 

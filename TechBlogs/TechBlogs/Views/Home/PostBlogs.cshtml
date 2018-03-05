@@ -26,13 +26,14 @@
     });
 
     $("#postblog").click(function () {
-        alert("hi");
+      //  alert("hi");
         var post= {
-            PostTitle: $("#title").val(),
+            PostName: $("#title").val(),
             DateTimePost: Date,
-            Description: $("#description").val(),
+            PostDescription: $("#description").val(),
 
         }
+       // alert(post);
     $.ajax({
         url: '/Home/PostBlogs/',
             type: 'POST',
