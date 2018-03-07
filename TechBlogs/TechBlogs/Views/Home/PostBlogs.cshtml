@@ -16,6 +16,7 @@
         <input type="text" placeholder="Description" id="description" />
         <input type="text" placeholder="Tags" id="tags" />
         <input type="button" id="postblog" value="PostBlogs" />
+        <input type="button" id="like" value="likepost" />
     </div>
 </body>
 </html>
@@ -49,5 +50,25 @@
 
         });
     });
-   
+
+
+    $("#like").click(function () {
+        var param = {
+            'postid': 1
+        };
+        $.ajax({
+            url: '/Home/LikePost/',
+            type: 'POST',
+            datatype: 'JSON',
+            data: param,
+
+            success: function (data) {
+                alert("done");
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+
+        });
+    });
 </script>

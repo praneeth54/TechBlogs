@@ -99,6 +99,13 @@ namespace DataAccessLayer
           
         }
 
+        public void LikePost(int postid)
+        {
+            Posts pst = tc.Posts.ToList().Find(x => x.PostId == postid);
+            pst.likepost = pst.likepost+ 1;
+
+            tc.SaveChanges();
+        }
       
 
 

@@ -18,6 +18,9 @@ namespace BusinessObjects
         public string Name { get; set; }
         public string Email { get; set; }
         public string Body { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+
+        public virtual Posts post { get; set; }
+        public virtual Users user { get; set; }
     }
 }

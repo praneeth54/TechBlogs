@@ -188,5 +188,12 @@ namespace TechBlogs.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult LikePost(int postid)
+        {
+            BL.LikePost(postid);
+            return View("Home");
+        }
+
     }
 }

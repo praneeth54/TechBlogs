@@ -30,5 +30,10 @@ namespace BusinessLayer
             return pst;
         }
 
+        public void LikePost(int postid)
+        {
+            dc.LikePost(postid);
+        }
+
     }
 }
