@@ -1,7 +1,7 @@
-﻿@*@*@using BusinessObjects
+﻿@using BusinessObjects
 
 <link href="~/Scripts/StyleSheet1.css" rel="stylesheet" />
-@*<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
     @if (User.Identity.IsAuthenticated)
     {
         @Html.Partial("_LoginPartial")
@@ -13,8 +13,8 @@
                     <a href="@Href("~/Posts/Details/" + pst.PostId)">@pst.PostName</a>
                 </div>
                 <div class="usr">
-                    @*<h3>By : @pst.user.username</h3>
-<span style="font-family:'Segoe Print'">Author : @pst.user.username</span>
+                    <h3>By : @pst.user.UserName</h3>
+<span style="font-family:'Segoe Print'">Author : @pst.user.UserName</span>
             </div>
 <div class="PostContainer">
     <div class="postTabs">
@@ -23,27 +23,27 @@
         </div>
         <div class="DateTab" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
             <div class="month">@pst.PostDate.ToString().ToUpper()</div>
-            @*<div class="day">@pst.datetimepost.ToString()</div>
+           <div class="day">@pst.PostDate.ToString()</div>
 
         </div>
         <div id="wrap">
 
             <div id="one">
 
-                @foreach (Tags tag in pst.tagid)
+                @foreach (Tags tag in pst.Tags)
                 {
-                    <span class="tag"><a href="@Href("~/Posts/Tags/" + tag.Name)">@tag.Name</a> </span>
+                    <span class="tag"><a href="@Href("~/Posts/Tags/" + tag.TagName)">@tag.TagName</a> </span>
                 }
 
             </div>
             <div id="two">
 
-                <a href="@Href("~/Posts/Details/" + pst.id+"#Comments")">@pst.Comments.Count Comments</a>
+                <a href="@Href("~/Posts/Details/" + pst.PostId+"#Comments")">@pst.Comments.Count Comments</a>
             </div>
 
             <div id="three">
 
-                <a href="@Href("~/Posts/Like/" +pst.id+ "#Likes")">@pst.likepost Likes</a>
+                <a href="@Href("~/Posts/Like/" +pst.PostId+ "#Likes")">@pst.likepost Likes</a>
             </div>
         </div>
     </div>
@@ -54,8 +54,8 @@
         if (IsAdmin)
         {
 <div class="postControlPanel">
-    <a href="@Href("~/Posts/Delete/" +pst.id)">Delete</a>
-    <a href="@Href("~/Posts/Edit/" +pst.id)">Edit</a>
+    <a href="@Href("~/Posts/Delete/" +pst.PostId)">Delete</a>
+    <a href="@Href("~/Posts/Edit/" +pst.PostId)">Edit</a>
 </div>
         }
 
@@ -63,7 +63,7 @@
         {
 <div id="commentContainer">
     <a id="comments"></a>
-    @foreach (Comment cmt in pst.Comments.OrderBy(x => x.DateTime))
+    @foreach (Comments cmt in pst.Comments.OrderBy(x => x.CommentDate))
     {
         <div class="comment">
             <div class="commentName">
@@ -78,11 +78,11 @@
             </div>
             said:
             <div class="commentBody">@html.Raw(@html.Encode(@cmt.Body).Replace("\n", "<br/>"))</div>
-            <div class="commentTime">at @cmt.DateTime.ToString("HH:mm") on @cmt.DateTime.Date</div>
+            <div class="commentTime">at @cmt.CommentDate.ToString("HH:mm") on @cmt.CommentDate.Date</div>
             @if (IsAdmin)
             {
                 <div class="commentControlpanel">
-                    <a href="@Href("~/Posts/DeleteComment/" + cmt.Id)">Delete</a>
+                    <a href="@Href("~/Posts/DeleteComment/" + cmt.CommentId)">Delete</a>
                 </div>
             }
         </div>
@@ -91,7 +91,7 @@
 
 <div id="commentEditor">
     <div id="commentprompt">Leave a comment !</div>
-    <form action="@Href("~/Posts/Comment/" +pst.id)" method="post">
+    <form action="@Href("~/Posts/Comment/" +pst.PostId)" method="post">
         <input type="text" id="commentNamePrompt" name="name" />Name (Required)<br />
         <input type="text" id="commentEmailPrompt" name="Email" /> Email(Optional)<br />
         <textarea id="commentBodyInput" name="body" rows="10" cols="60"></textarea><br />
@@ -103,7 +103,7 @@
         }
 
 
-}*@
+}
 
 
 

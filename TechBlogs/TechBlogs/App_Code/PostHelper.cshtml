@@ -1,0 +1,110 @@
+﻿@using BusinessObjects
+
+<link href="~/Scripts/StyleSheet1.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+@if (User.Identity.IsAuthenticated)
+    {
+@Html.Partial("_LoginPartial")
+    }
+@helper Render(Posts pst, System.Web.Mvc.HtmlHelper html, bool IsAdmin, bool showComments)
+    {
+                        /**/
+        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+            <div class="PostTitle" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:x-large">
+                <a href="@Href("~/Posts/Details/" + pst.PostId)">@pst.PostName</a>
+            </div>
+            <div class="usr">
+                <h3>By : @pst.user.UserName</h3>
+                <span style="font-family:'Segoe Print'">Author : @pst.user.UserName</span>
+            </div>
+            <div class="PostContainer">
+                <div class="postTabs">
+                    <div class="PostContent">
+                        <div class="postBody" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:large">@html.Raw(pst.PostDescription)</div>
+                    </div>
+                    <div class="DateTab" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                        <div class="month">@pst.PostDate.ToString().ToUpper()</div>
+                        <div class="day">@pst.PostDate.ToString()</div>
+
+                    </div>
+                    <div id="wrap">
+
+                        <div id="one">
+
+                            @foreach (Tags tag in pst.Tags)
+                            {
+                                <span class="tag"><a href="@Href("~/Posts/Tags/" + tag.TagName)">@tag.TagName</a> </span>
+                            }
+
+                        </div>
+                        <div id="two">
+
+                            <a href="@Href("~/Posts/Details/" + pst.PostId+"#Comments")">@pst.Comments.Count Comments</a>
+                        </div>
+
+                        <div id="three">
+
+                            <a href="@Href("~/Posts/Like/" +pst.PostId+ "#Likes")">@pst.likepost Likes</a>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+        </div><br />
+        if (IsAdmin)
+        {
+            <div class="postControlPanel">
+                <a href="@Href("~/Posts/Delete/" +pst.PostId)">Delete</a>
+                <a href="@Href("~/Posts/Edit/" +pst.PostId)">Edit</a>
+            </div>
+        }
+
+        if (showComments)
+        {
+            <div id="commentContainer">
+                <a id="comments"></a>
+                @foreach (Comments cmt in pst.Comments.OrderBy(x => x.CommentDate))
+                {
+                    <div class="comment">
+                        <div class="commentName">
+                            @if (!string.IsNullOrWhiteSpace(cmt.Email))
+                            {
+                                <a href="Mailto:@cmt.Email">@cmt.Name</a>
+                            }
+                            else
+                            {
+                                @cmt.Name;
+                            }
+                        </div>
+                        said:
+                        <div class="commentBody">@html.Raw(@html.Encode(@cmt.Body).Replace("\n", "<br/>"))</div>
+                        <div class="commentTime">at @cmt.CommentDate.ToString("HH:mm") on @cmt.CommentDate.Date</div>
+                        @if (IsAdmin)
+                        {
+                            <div class="commentControlpanel">
+                                <a href="@Href("~/Posts/DeleteComment/" + cmt.CommentId)">Delete</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div id="commentEditor">
+                <div id="commentprompt">Leave a comment !</div>
+                <form action="@Href("~/Posts/Comment/" +pst.PostId)" method="post">
+                    <input type="text" id="commentNamePrompt" name="name" />Name (Required)<br />
+                    <input type="text" id="commentEmailPrompt" name="Email" /> Email(Optional)<br />
+                    <textarea id="commentBodyInput" name="body" rows="10" cols="60"></textarea><br />
+                    <input type="submit" id="commentSubmitInput" name="submit" value="submit" />
+
+                </form>
+            </div>
+
+        }
+
+
+}
+
+
+

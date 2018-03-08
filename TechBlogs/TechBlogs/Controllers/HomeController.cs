@@ -163,11 +163,33 @@ namespace TechBlogs.Controllers
             //return View(pst.Take(PostsperPage));
         }
 
+        //[HttpGet]
+        //public ActionResult test()
+        //{
+        //    return View();
+        //}
+        private const int PostsperPage = 4;
+        private const int PostsPerFeed = 25;
+        public bool IsAdmin { get { return Session["IsAdmin"] != null && (bool)Session["IsAdmin"]; } }
+
         [HttpGet]
-        public ActionResult test()
+        public ActionResult test(int? id)
         {
-            return View();
+            int pageNumber = id ?? 0;
+            //IEnumerable<Posts> pst = (from post in BE.posts
+            //                          where post.postdate < DateTime.Now
+            //                          orderby post.postdate descending
+            //                          select post).Skip(pageNumber * PostsperPage).Take(PostsperPage + 1);
+            // IEnumerable<Posts> pst = BE.posts.ToList();
+
+            IEnumerable<Posts> pst = BL.GetAllPosts(-1);
+            ViewBag.IsPreviousLinkVisible = pageNumber > 0;
+            ViewBag.IsNextLinkVisible = pst.Count() > PostsperPage;
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.IsAdmin = IsAdmin;
+            return View(pst.Take(PostsperPage));
         }
+
 
         [HttpGet]
         public ActionResult PostBlogs()

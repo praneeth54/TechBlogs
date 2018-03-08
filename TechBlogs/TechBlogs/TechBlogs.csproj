@@ -682,6 +682,7 @@
     <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
     <Content Include="App_Plugins\UIOMatic\UIOMatic.config" />
     <Content Include="App_Plugins\UIOMatic\package.manifest" />
+    <Content Include="App_Code\PostHelper.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -716,6 +717,8 @@
     <Content Include="Views\Home\blog.cshtml" />
     <Content Include="Views\Home\GetAllBlogs.cshtml" />
     <Content Include="Views\Shared\PostHelper.cshtml" />
+    <Content Include="Views\Partials\BlogsPartial.cshtml" />
+    <Content Include="Views\Shared\BlogsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
